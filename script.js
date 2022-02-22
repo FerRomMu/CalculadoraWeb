@@ -1,7 +1,7 @@
 const numButtons = document.querySelectorAll(".button__num");
 const dotButton = document.querySelector(".button__dot");
 const operationButtons = document.querySelectorAll(".button__operation");
-const equalButton = document.querySelector(".button__equals");
+const equalsButton = document.querySelector(".button__equals");
 const deleteButton = document.querySelector(".button__del");
 const allClearButton = document.querySelector(".button__ac");
 const previousOperandText = document.querySelector(".calculator__previous-operand");
@@ -12,19 +12,22 @@ class Calculator{
     constructor(prevOperand, currentOperand) {
         this.prevOperandElement = prevOperand;
         this.currentOperandElement = currentOperand;
+        this.operator = "+";
         this.dotLock = false;
         this.clear();
     }
 
     refreshDisplay(){
+        if (this.currentOperand == "") {
+            this.currentOperand = "0";
+        }
         this.prevOperandElement.innerText = this.prevOperand;
         this.currentOperandElement.innerText = this.currentOperand;
     }
 
     clear() {
         this.prevOperand = "";
-        this.currentOperand = 0;
-        this.operator = undefined;
+        this.currentOperand = "";
         this.dotIsLocked = false;
         this.refreshDisplay();
     }
@@ -43,6 +46,45 @@ class Calculator{
             this.dotIsLocked = true;
         }
     }
+
+    del(){
+        if(this.currentOperand.charAt(this.currentOperand.length - 1) == ".") {
+            this.dotIsLocked = false;
+        }
+        this.currentOperand = this.currentOperand.slice(0,-1);
+        this.refreshDisplay();
+    }
+
+    operate(operation) {
+        this.equals();
+        this.operator = operation;
+    }
+
+    equals(){
+        let a = parseFloat(this.prevOperand);
+        if (isNaN(a)){
+            a = 0;
+        }
+        let b = parseFloat(this.currentOperand);
+        switch(this.operator) {
+            case "+":
+                this.prevOperand = a + b;
+                break;
+            case "-":
+                this.prevOperand = a - b;
+                break;
+            case "/":
+                this.prevOperand = a / b;
+                break;
+            case "*":
+                this.prevOperand = a * b;
+                break;
+        }
+        this.currentOperand = "";
+        this.refreshDisplay();
+        this.operator = "+";
+        this.dotIsLocked = false;
+    }
 }
 
 const calculator = new Calculator(previousOperandText, currentOperandText);
@@ -53,3 +95,12 @@ numButtons.forEach(button => {
 
 dotButton.addEventListener('click', () => {calculator.dotClick()})
 
+deleteButton.addEventListener('click', () => {calculator.del()})
+
+allClearButton.addEventListener('click', () => {calculator.clear()})
+
+operationButtons.forEach(button => {
+    button.addEventListener('click', () => {calculator.operate(button.innerText)})
+})
+
+equalsButton.addEventListener('click', () => {calculator.equals()})
