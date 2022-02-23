@@ -6,13 +6,14 @@ const deleteButton = document.querySelector(".button__del");
 const allClearButton = document.querySelector(".button__ac");
 const previousOperandText = document.querySelector(".calculator__previous-operand");
 const currentOperandText = document.querySelector(".calculator__current-operand");
+const currentOperator = document.querySelector(".calculator__current-operator");
 
 class Calculator{
 
-    constructor(prevOperand, currentOperand) {
+    constructor(prevOperand, currentOperand, currentOperator) {
         this.prevOperandElement = prevOperand;
         this.currentOperandElement = currentOperand;
-        this.operator = "+";
+        this.currentOperatorElement = currentOperator;
         this.dotLock = false;
         this.clear();
     }
@@ -23,11 +24,13 @@ class Calculator{
         }
         this.prevOperandElement.innerText = this.prevOperand;
         this.currentOperandElement.innerText = this.currentOperand;
+        this.currentOperatorElement.innerText = this.operator;
     }
 
     clear() {
         this.prevOperand = "";
         this.currentOperand = "";
+        this.operator = "+";
         this.dotIsLocked = false;
         this.refreshDisplay();
     }
@@ -58,6 +61,7 @@ class Calculator{
     operate(operation) {
         this.equals();
         this.operator = operation;
+        this.refreshDisplay();
     }
 
     equals(){
@@ -79,15 +83,17 @@ class Calculator{
             case "*":
                 this.prevOperand = a * b;
                 break;
+            default:
+                return;
         }
         this.currentOperand = "";
-        this.refreshDisplay();
         this.operator = "+";
+        this.refreshDisplay();
         this.dotIsLocked = false;
     }
 }
 
-const calculator = new Calculator(previousOperandText, currentOperandText);
+const calculator = new Calculator(previousOperandText, currentOperandText, currentOperator);
 
 numButtons.forEach(button => {
     button.addEventListener('click', () => {calculator.numClick(button.innerText)})
