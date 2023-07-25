@@ -1,4 +1,4 @@
-afaadsaconst numButtons = document.querySelectorAll(".button__num");
+const numButtons = document.querySelectorAll(".button__num");
 const dotButton = document.querySelector(".button__dot");
 const operationButtons = document.querySelectorAll(".button__operation");
 const equalsButton = document.querySelector(".button__equals");
