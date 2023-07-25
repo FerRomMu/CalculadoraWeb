@@ -7,6 +7,7 @@ const allClearButton = document.querySelector(".button__ac");
 const previousOperandText = document.querySelector(".calculator__previous-operand");
 const currentOperandText = document.querySelector(".calculator__current-operand");
 const currentOperator = document.querySelector(".calculator__current-operator");
+const otraCosa = "Hola"
 
 class Calculator{
 
