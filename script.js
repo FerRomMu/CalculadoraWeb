@@ -9,7 +9,7 @@ const currentOperandText = document.querySelector(".calculator__current-operand"
 const currentOperator = document.querySelector(".calculator__current-operator");
 const otraCosa = "Hola"
 
-class Calculator{
+class Calculator{a
 
     constructor(prevOperand, currentOperand, currentOperator) {
         this.prevOperandElement = prevOperand;
