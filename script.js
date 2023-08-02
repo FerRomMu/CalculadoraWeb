@@ -93,7 +93,7 @@ class Calculator{a
         this.dotIsLocked = false;
     }
 }
-
+a
 const calculator = new Calculator(previousOperandText, currentOperandText, currentOperator);
 
 numButtons.forEach(button => {
